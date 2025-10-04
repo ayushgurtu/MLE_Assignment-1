@@ -73,5 +73,3 @@ There is no test harness included by default. For quick checks, import functions
 This repository is part of a course assignment. No license is included; add one if you plan to reuse or publish the code.
 
 ---
-
-Notes: This README summarizes repository structure and the recommended development workflow taken from `.github/copilot-instructions.md`. If you want, I can also extract key functions from the notebook into unit-testable `.py` modules and add a minimal test runner.
