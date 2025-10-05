@@ -63,8 +63,8 @@ def process_features_gold_table(snapshot_date_str, silver_loan_daily_directory, 
 
     # --- Feature Creation ---
 
-    # # Debt-to-Income Ratio
-    # df = df.withColumn("debt_to_income_ratio",(col("Outstanding_Debt") + col("loan_amt")) / col("Annual_Income"))
+    # Debt-to-Income Ratio
+    df = df.withColumn("debt_to_income_ratio",(col("Outstanding_Debt") + col("loan_amt")) / col("Annual_Income"))
 
     # Installment-to-Income Ratio
     df = df.withColumn("installment_to_income_ratio",col("due_amt") / col("Monthly_Inhand_Salary"))
@@ -85,7 +85,7 @@ def process_features_gold_table(snapshot_date_str, silver_loan_daily_directory, 
     df = df.withColumn("credit_inquiry_stress",col("Num_Credit_Inquiries") / F.when(col("Num_of_Loan") > 0, col("Num_of_Loan")).otherwise(F.lit(1)))
 
     # select columns to save
-    df = df.select("loan_id", "Customer_ID", "installment_to_income_ratio", "disposable_income_ratio", "overdue_ratio","missed_payment_ratio" ,"credit_inquiry_stress" ,"snapshot_date")
+    df = df.select("loan_id", "Customer_ID", "debt_to_income_ratio", "installment_to_income_ratio", "disposable_income_ratio", "overdue_ratio","missed_payment_ratio" ,"credit_inquiry_stress" , "Age", "fe_1", "fe_2", "fe_3", "fe_4", "fe_5", "fe_6", "fe_7", "fe_8", "fe_9", "fe_10", "fe_11", "fe_12", "fe_13", "fe_14", "fe_15", "fe_16", "fe_17", "fe_18", "fe_19", "fe_20","snapshot_date")
 
     # save gold table - IRL connect to database to write
     partition_name = "gold_feature_store_" + snapshot_date_str.replace('-','_') + '.parquet'

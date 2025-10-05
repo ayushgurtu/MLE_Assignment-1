@@ -102,6 +102,14 @@ def process_silver_table(snapshot_date_str,
     # for column, new_type in column_type_map.items():
     #     if column in df1.columns:
     #         df1 = df1.withColumn(column, F.col(column).cast(new_type))
+
+    # clean data: strip underscores from numeric columns before type conversion
+    columns_to_clean = [
+        'Age'
+    ]
+    for column in columns_to_clean:
+        if column in df1.columns:
+            df1 = df1.withColumn(column, F.regexp_replace(col(column).cast(StringType()), "_", ""))
             
     for column, new_type in column_type_map.items():
         if column in df1.columns:
@@ -173,6 +181,16 @@ def process_silver_table(snapshot_date_str,
     # for column, new_type in column_type_map.items():
     #     if column in df2.columns:
     #         df2 = df2.withColumn(column, F.col(column).cast(new_type))
+
+    # clean data: strip underscores from numeric columns before type conversion
+    columns_to_clean = [
+        'Annual_Income', 'Num_of_Loan', 'Num_of_Delayed_Payment', 
+        'Changed_Credit_Limit', 'Outstanding_Debt', 'Amount_invested_monthly', 
+        'Monthly_Balance'
+    ]
+    for column in columns_to_clean:
+        if column in df2.columns:
+            df2 = df2.withColumn(column, F.regexp_replace(col(column).cast(StringType()), "_", ""))
             
     for column, new_type in column_type_map.items():
         if column in df2.columns:
